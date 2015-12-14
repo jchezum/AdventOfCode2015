@@ -2,15 +2,16 @@ class ThirdAdvent():
 	def __init__(self):
 		pass
 
+	directions=[]
 	def inputFile(self):
 		file = open('SecondAdventInput','r')
 		directions=file.readlines()
 		file.close()
-        print directions
+		print directions
 		return directions
 
-    def main(self):
-        self.inputFile()
+	def main(self):
+		self.inputFile()
 
 ta=ThirdAdvent()
 ta.main()
