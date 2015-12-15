@@ -72,18 +72,19 @@ class ThirdAdvent():
 
 	def main(self):
 		# directions='^v^v^v^v^v'
-		directions='^>v<'
+		# directions='^>v<'
+		directions='^v^v^^vvv>><>><'
 		homeList=[]
 		total_homes_visited=1
-		# directions=self.inputFile()
+		directions=self.inputFile()
 		homeList=self.create_homes(homeList,directions)
 		total_homes_visited=self.count_total_homes_visited(homeList,directions,total_homes_visited)
 
 		santasList=''
 		roboSantasList=''
 		santasList,roboSantasList=self.splitList(directions)
-		print santasList
-		print roboSantasList
+		print 'Santa: %s' %santasList
+		print 'RoboSanta: %s' %roboSantasList
 
 		#Santa
 		#-------------------------------------------------------------
@@ -102,9 +103,9 @@ class ThirdAdvent():
 		print 'Total number of homes Santa visits: %s' %total_homes_santa
 		print 'Total number of homes RoboSanta visits: %s' %total_homes_roboSanta
 		total=total_homes_roboSanta+total_homes_santa
-		print 'Total houses: %s' %total
+		print 'Total houses visited this year: %s' %total
 
-		print 'Total homes visted: %s' %total_homes_visited
+		print 'Total homes visted last year: %s' %total_homes_visited
 
 
 ta=ThirdAdvent()
