@@ -72,11 +72,11 @@ class ThirdAdvent():
 
 	def main(self):
 		# directions='^v^v^v^v^v'
-		# directions='^>v<'
-		directions='^v^v^^vvv>><>><'
+		directions='^>v<'
+		# directions='^^v^v^'
 		homeList=[]
 		total_homes_visited=1
-		directions=self.inputFile()
+		# directions=self.inputFile()
 		homeList=self.create_homes(homeList,directions)
 		total_homes_visited=self.count_total_homes_visited(homeList,directions,total_homes_visited)
 
@@ -91,18 +91,34 @@ class ThirdAdvent():
 		total_homes_santa=1
 		SantasHomeList=[]
 		SantasHomeList=self.create_homes(SantasHomeList,santasList)
-		total_homes_santa=self.count_total_homes_visited(SantasHomeList,santasList,total_homes_santa)
+		# total_homes_santa=self.count_total_homes_visited(SantasHomeList,santasList,total_homes_santa)
 
 		#RoboSanta
 		#-------------------------------------------------------------
 		total_homes_roboSanta=0
 		RoboSantasHomeList=[]
 		RoboSantasHomeList=self.create_homes(RoboSantasHomeList,roboSantasList)
+
+		#De-duplication to remove homes both visited
+		sCoordList=[]
+		rsCoordList=[]
+		for x in SantasHomeList:
+			sCoordList.append(str(x.x_pos)+','+str(x.y_pos))
+		for x in RoboSantasHomeList:
+			rsCoordList.append(str(x.x_pos)+','+str(x.y_pos))
+
+		duplicates=0
+		for x in sCoordList:
+			if x in rsCoordList:
+				duplicates=duplicates+1
+
 		total_homes_roboSanta=self.count_total_homes_visited(RoboSantasHomeList,roboSantasList,total_homes_roboSanta)
+		total_homes_santa=self.count_total_homes_visited(SantasHomeList,santasList,total_homes_santa)
 
 		print 'Total number of homes Santa visits: %s' %total_homes_santa
 		print 'Total number of homes RoboSanta visits: %s' %total_homes_roboSanta
-		total=total_homes_roboSanta+total_homes_santa
+		print 'Total number of homes both visit: %s' %duplicates
+		total=total_homes_roboSanta+total_homes_santa-duplicates
 		print 'Total houses visited this year: %s' %total
 
 		print 'Total homes visted last year: %s' %total_homes_visited
