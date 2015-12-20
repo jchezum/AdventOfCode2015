@@ -24,7 +24,7 @@ class FourteenthAdvent():
 	def __init__(self):
 		pass
 
-	total_race_duration=2503
+	total_race_duration=1000
 	reindeer=[]
 
 	def inputFile(self):
@@ -59,35 +59,55 @@ class FourteenthAdvent():
 		reindeer_stats=self.inputFile()
 
 		reindeer_stats_parsed=self.parse_deer_stats(reindeer_stats)
-		# for x in reindeer_stats_parsed:
-		# 	print x[0],x[3],x[6],x[13]
+		print '----------------------------'
+		for x in reindeer_stats_parsed:
+			# print x[0],x[3],x[6],x[13]
+			rate=int(x[3])
+			duration=int(x[6])
+			restTime=int(x[13])
+			period=(self.total_race_duration/(duration+restTime))
+			distance_travelled=rate*duration*(self.total_race_duration/(duration+restTime))
+			extraDistance=0
+			remaining_race_time=self.total_race_duration-(period*(duration+restTime))
+			if remaining_race_time!=0:
+				remainder=self.total_race_duration-remaining_race_time
+				if remainder<duration:
+					distance_travelled+=(rate*remainder)
+				else:
+					distance_travelled+=(rate*duration)
+
+			# print period, distance_travelled,self.total_race_duration-period
+			print (x[0]+'\t'+str(distance_travelled)).expandtabs(10)
+		print '----------------------------'
 
 		reindeer=self.reindeer_maker(reindeer_stats_parsed)
 
 		currentTime=0
 		while currentTime < self.total_race_duration:
 			for d in reindeer:
-				if d.state=='Moving' and d.secondsMoved<d.movementDuration:
-					d.distanceTraveled=d.distanceTraveled+d.rate
+				# if d.name=='djacuan':
+				# 	print 'Before: ',d.name, d.secondsMoved,d.timeRested,d.distanceTraveled
+				if d.secondsMoved<d.movementDuration:
+					d.distanceTraveled+=d.rate
 					d.secondsMoved+=1
-				else:
-					d.state='Resting'
-					d.secondsMoved=0
-
-				if d.state=='Resting' and d.timeRested<d.restDuration:
+					# print 'moving'
+				elif d.timeRested<d.restDuration:
 					d.timeRested+=1
+					# print 'resting'
 				else:
-					d.state='Moving'
+					d.secondsMoved=0
 					d.timeRested=0
-				# print d.name, d.secondsMoved,d.timeRested,d.state,d.distanceTraveled
+					# print 'resetting'
+					# currentTime-=1 #not sure about this term
+				# if d.name=='djacuan':
+				# 	print 'After:  ',d.name, d.secondsMoved,d.timeRested,d.distanceTraveled
 				# print '---------------------------------------'
 			currentTime+=1
-
 
 		maxDistance=0
 		winningDeer=0
 		for d in reindeer:
-			print d.name, d.distanceTraveled
+			print (d.name+'\t'+str(d.distanceTraveled)).expandtabs(10)
 			if d.distanceTraveled > maxDistance:
 				maxDistance=d.distanceTraveled
 				winningDeer=d.name
