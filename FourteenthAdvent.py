@@ -24,7 +24,7 @@ class FourteenthAdvent():
 	def __init__(self):
 		pass
 
-	total_race_duration=1000
+	total_race_duration=2503
 	reindeer=[]
 
 	def inputFile(self):
