@@ -22,6 +22,13 @@ class FifthAdvent():
 				filteredList.append(word)
 		return filteredList
 
+	def search(self,pattern,list):
+		filteredList=[]
+		for word in list:
+			if re.match(pattern,word):
+				filteredList.append(word)
+		return filteredList
+
 	def main(self):
 		wordList=[]
 		wordList=self.inputFile()
